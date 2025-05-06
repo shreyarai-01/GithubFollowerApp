@@ -6,7 +6,7 @@
 import UIKit
 
 class GFUserInfoHeaderVC: UIViewController {
-
+    
     let avatarImageView = GFImageAvatarView(frame: .zero)
     let usernameLabel = GFTitleLabel(textAlignment: .left, fontSize: 34)
     let nameLabel = GFSecondaryTitleLabel(fontSize: 18)
@@ -17,10 +17,10 @@ class GFUserInfoHeaderVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       addsubView()
+        addsubView()
         layoutUI()
         configureUI()
-      
+        
     }
     func configureUI() {
         avatarImageView.downloadImage(from: user.avatarUrl)

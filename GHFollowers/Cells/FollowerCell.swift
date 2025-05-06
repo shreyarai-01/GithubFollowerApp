@@ -7,7 +7,6 @@ import UIKit
 class FollowerCell: UICollectionViewCell {
     static let reuseID = "FollowerCell"
     let padding:CGFloat = 8
-    
     let avatarImageView = GFImageAvatarView(frame: .zero)
     let userNameLabel = GFTitleLabel(textAlignment: .center, fontSize: 16)
     
@@ -29,8 +28,6 @@ class FollowerCell: UICollectionViewCell {
             userNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
             userNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
             userNameLabel.heightAnchor.constraint(equalToConstant: 20)
-            
-            
         ])
         
     }

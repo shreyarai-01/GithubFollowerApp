@@ -10,7 +10,7 @@ enum ItemInfoType{
 }
 
 class GFItemInfoView: UIView {
-
+    
     let symbolImage = UIImageView()
     let titleLabel = GFTitleLabel(textAlignment: .left, fontSize: 14)
     let countLabel = GFTitleLabel(textAlignment: .center, fontSize: 14)
@@ -48,7 +48,7 @@ class GFItemInfoView: UIView {
             countLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             countLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             countLabel.heightAnchor.constraint(equalToConstant: 18)
-        
+            
         ])
     }
     

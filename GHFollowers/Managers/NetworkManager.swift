@@ -20,7 +20,7 @@ class NetworkManager {
         }
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
-          
+            
             if let _ = error {
                 completed(.failure(.invalidData))
                 return
@@ -54,7 +54,7 @@ class NetworkManager {
         }
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
-          
+            
             if let _ = error {
                 completed(.failure(.invalidData))
                 return
@@ -77,5 +77,5 @@ class NetworkManager {
             }
         }
         task.resume()
-        }
+    }
 }

@@ -22,8 +22,6 @@ class UserInfoVC: UIViewController {
         configureVC()
         layoutUI()
         getUserInfo()
-    
-        
     }
     
     func layoutUI() {
@@ -64,22 +62,22 @@ class UserInfoVC: UIViewController {
     
     func getUserInfo () {
         NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
-                guard let self = self else { return }
-                
-                switch result {
-                case .success(let user) :
-                    DispatchQueue.main.async {
-                        self.configureUIElement(with: user)
-                    }
-                    
-                case .failure(let error) :
-                    self.presentGFAlertOnMainThread(title: "Ooh", message: error.rawValue, buttonTitle: "ok")
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let user) :
+                DispatchQueue.main.async {
+                    self.configureUIElement(with: user)
                 }
+                
+            case .failure(let error) :
+                self.presentGFAlertOnMainThread(title: "Ooh", message: error.rawValue, buttonTitle: "ok")
             }
+        }
     }
     func configureUIElement(with user: User) {
         DispatchQueue.main.async {
-           let repoItemVC = GFRepoItemVC(user: user)
+            let repoItemVC = GFRepoItemVC(user: user)
             repoItemVC.delegate = self
             
             let followerItemVC = GfFollowerItemVC(user: user)
@@ -93,14 +91,14 @@ class UserInfoVC: UIViewController {
     @objc func dismissVC() {
         dismiss(animated: true)
     }
-
+    
     func add(childVC : UIViewController, to containerView: UIView){
         addChild(childVC)
         containerView.addSubview(childVC.view)
         childVC.view.frame = containerView.bounds
         childVC.didMove(toParent: self)
     }
-   
+    
 }
 
 extension UserInfoVC: UserInfoVcDelegate{
@@ -120,6 +118,4 @@ extension UserInfoVC: UserInfoVcDelegate{
         delegate.didRequestFollower(for: user.login)
         dismissVC()
     }
-    
-  
 }

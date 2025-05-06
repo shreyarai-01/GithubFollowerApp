@@ -11,7 +11,4 @@ extension Date {
         dateFprmatter.dateFormat = "MMMM yyyy"
         return dateFprmatter.string(from: self)
     }
-    
-   
-    
 }

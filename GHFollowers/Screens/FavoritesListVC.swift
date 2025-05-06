@@ -1,7 +1,7 @@
 import UIKit
 
 class FavoritesListVC: UIViewController {
-
+    
     let tableView = UITableView()
     var favorites:[Follower] = []
     override func viewDidLoad() {
@@ -65,7 +65,7 @@ extension FavoritesListVC : UITableViewDelegate, UITableViewDataSource {
         destVC.title = favorite.login
         
         navigationController?.pushViewController(destVC, animated: true)
-
+        
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else{ return }

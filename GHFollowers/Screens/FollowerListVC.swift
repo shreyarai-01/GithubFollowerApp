@@ -6,7 +6,7 @@ protocol FollowerListVCDelegate : AnyObject {
 }
 class FollowerListVC: UIViewController {
     
-     
+    
     enum Section {
         case main
     }
@@ -28,7 +28,7 @@ class FollowerListVC: UIViewController {
         configureSearchController()
         getFollowers(username: username, page: page)
         configureDataSource()
-    
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -39,38 +39,38 @@ class FollowerListVC: UIViewController {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         navigationItem.rightBarButtonItem = addButton
     }
-   @objc func addButtonTapped(){
-       showLoadingView()
-       NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
-           guard let self = self else { return }
-           self.dismissLoadingView()
-           switch result {
-           case .success(let user):
-               let favor = Follower(login: user.login, avatarUrl: user.avatarUrl)
-               PersistenceManager.updateWith(favorite: favor, actionType: .add) { [weak self] error in
-                   guard let self = self else { return }
-                   guard let err = error else {
-                       self.presentGFAlertOnMainThread(title: "Sucesss", message: "You have favourited ", buttonTitle: "Hooray")
+    @objc func addButtonTapped(){
+        showLoadingView()
+        NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
+            guard let self = self else { return }
+            self.dismissLoadingView()
+            switch result {
+            case .success(let user):
+                let favor = Follower(login: user.login, avatarUrl: user.avatarUrl)
+                PersistenceManager.updateWith(favorite: favor, actionType: .add) { [weak self] error in
+                    guard let self = self else { return }
+                    guard let err = error else {
+                        self.presentGFAlertOnMainThread(title: "Sucesss", message: "You have favourited ", buttonTitle: "Hooray")
                         return
-                                
-                   }
-                   self.presentGFAlertOnMainThread(title: "Something went wrong", message: err.rawValue, buttonTitle: "Okk")
-                     
-               }
-                                                        
-                                                        case .failure(let error):
-                                                            self.presentGFAlertOnMainThread(title: "Smthing went wrong", message: error.rawValue, buttonTitle: "ok")
-           }
-       }
+                        
+                    }
+                    self.presentGFAlertOnMainThread(title: "Something went wrong", message: err.rawValue, buttonTitle: "Okk")
+                    
+                }
+                
+            case .failure(let error):
+                self.presentGFAlertOnMainThread(title: "Smthing went wrong", message: error.rawValue, buttonTitle: "ok")
+            }
+        }
     }
     
-     func configureCollectionView() {
-         collectionView = UICollectionView(frame: view.bounds,collectionViewLayout: UIHelper.createThreeColumn(in: view))
+    func configureCollectionView() {
+        collectionView = UICollectionView(frame: view.bounds,collectionViewLayout: UIHelper.createThreeColumn(in: view))
         view.addSubview(collectionView)
-         collectionView.delegate = self
+        collectionView.delegate = self
         view.backgroundColor = .systemBackground
         collectionView.register(FollowerCell.self, forCellWithReuseIdentifier: FollowerCell.reuseID)
-         collectionView
+        collectionView
     }
     func configureSearchController() {
         let searchController = UISearchController()
@@ -82,44 +82,42 @@ class FollowerListVC: UIViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.hidesSearchBarWhenScrolling = false
     }
-  
+    
     func getFollowers(username : String, page: Int){
         showLoadingView()
         NetworkManager.shared.getFollowers(for: username, page: page) {[weak self] result in
             guard let self = self else { return }
             self.dismissLoadingView()
-        switch result
+            switch result
             {
-        case .success(let folowers) :
-            if folowers.count < 100 { self.hasMoreFollowers = false }
-            self.followers.append(contentsOf: folowers)
-            if self.followers.isEmpty {
-                let message = "THis User does not have any folowers, please someone follow them "
-                
-                DispatchQueue.main.async{
-                    self.showEmptyStateView(with: message, in: self.view)
+            case .success(let folowers) :
+                if folowers.count < 100 { self.hasMoreFollowers = false }
+                self.followers.append(contentsOf: folowers)
+                if self.followers.isEmpty {
+                    let message = "THis User does not have any folowers, please someone follow them "
+                    
+                    DispatchQueue.main.async{
+                        self.showEmptyStateView(with: message, in: self.view)
+                    }
+                    return
                 }
-                return
+                self.updateData(on: self.followers)
+                
+            case .failure(let error):
+                self.presentGFAlertOnMainThread(title: "Bad stuff", message: error.rawValue, buttonTitle: "OK")
             }
-            self.updateData(on: self.followers)
-            
-        case .failure(let error):
-            self.presentGFAlertOnMainThread(title: "Bad stuff", message: error.rawValue, buttonTitle: "OK")
-        }
         }
     }
-  
     
     func configureDataSource(){
         dataSource = UICollectionViewDiffableDataSource<Section,Follower>(collectionView: collectionView, cellProvider: {( collectionView, indexPath, follower) -> UICollectionViewCell? in
-             
+            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FollowerCell.reuseID, for: indexPath) as! FollowerCell
             
             cell.set(follower: follower)
             return cell
         })
     }
-  
     
     func updateData(on follower: [Follower]){
         var snapShot = NSDiffableDataSourceSnapshot<Section, Follower>()
@@ -154,7 +152,7 @@ extension FollowerListVC: UICollectionViewDelegate{
         destVC.delegate = self
         let navController = UINavigationController(rootViewController: destVC)
         present(navController,animated: true)
-       // navigationController?.pushViewController(destVC, animated: true)
+        // navigationController?.pushViewController(destVC, animated: true)
     }
 }
 extension FollowerListVC: UISearchResultsUpdating, UISearchBarDelegate {
