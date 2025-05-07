@@ -89,7 +89,7 @@ class UserInfoVC: UIViewController {
         }
     }
     @objc func dismissVC() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     func add(childVC : UIViewController, to containerView: UIView){
@@ -112,10 +112,12 @@ extension UserInfoVC: UserInfoVcDelegate{
     
     func didTapGetFolowers(for user: User) {
         guard user.followers != 0 else {
-            presentGFAlertOnMainThread(title: "No Followers", message: "User does not have any followers .. sad !!", buttonTitle: "Ok")
+            presentGFAlertOnMainThread(title: "No Followers", message: "User does not have any follower .. sad !!", buttonTitle: "Ok")
             return
         }
-        delegate.didRequestFollower(for: user.login)
-        dismissVC()
+        let followerListVC = FollowerListVC()
+        followerListVC.username = user.login
+        followerListVC.title = user.login
+        navigationController?.pushViewController(followerListVC, animated: true)
     }
 }
