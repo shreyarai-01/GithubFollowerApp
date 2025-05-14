@@ -4,7 +4,7 @@ protocol FollowerListVCDelegate : AnyObject {
     
     func didRequestFollower(for user: String)
 }
-class FollowerListVC: UIViewController {
+class FollowerListVC: GFDataLoadingVC {
     
     
     enum Section {
@@ -19,13 +19,23 @@ class FollowerListVC: UIViewController {
     var isSearching = false
     var filteredFollower :[Follower] = []
     
+    init(userName: String){
+        super.init(nibName: nil, bundle: nil)
+        self.username = userName
+        title = userName
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
         configureVC()
         configureCollectionView()
-        configureSearchController()
+      //  configureSearchController()
         getFollowers(username: username, page: page)
         configureDataSource()
         
@@ -101,7 +111,15 @@ class FollowerListVC: UIViewController {
                     }
                     return
                 }
-                self.updateData(on: self.followers)
+                if self.page == 1 {
+                    DispatchQueue.main.async {
+                        self.configureSearchController()
+                    }
+                }
+                
+                DispatchQueue.main.async {
+                    self.updateData(on: self.followers)
+                }
                 
             case .failure(let error):
                 self.presentGFAlertOnMainThread(title: "Bad stuff", message: error.rawValue, buttonTitle: "OK")
@@ -147,10 +165,12 @@ extension FollowerListVC: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let activeArray = isSearching ? filteredFollower:followers
         let followerr = activeArray[indexPath.item]
-        let destVC = UserInfoVC()
-        destVC.username = followerr.login
-        destVC.delegate = self
-        navigationController?.pushViewController(destVC, animated: true)
+        DispatchQueue.main.async {
+            let destVC = UserInfoVC()
+            destVC.username = followerr.login
+            destVC.delegate = self
+            self.navigationController?.pushViewController(destVC, animated: true)
+        }
 
     }
 }

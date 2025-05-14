@@ -6,7 +6,7 @@ protocol UserInfoVcDelegate : AnyObject{
     func didTapGetFolowers(for user: User)
 }
 
-class UserInfoVC: UIViewController {
+class UserInfoVC: GFDataLoadingVC {
     var itemViews :[UIView] = []
     var username: String!
     let headerView = UIView()
@@ -85,7 +85,7 @@ class UserInfoVC: UIViewController {
             self.add(childVC: repoItemVC, to: self.itemViewOne)
             self.add(childVC: followerItemVC, to: self.itemViewTwo)
             self.add(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
-            self.dateLabel.text = "Github since \( user.createdAt.convertDisplay())"
+            self.dateLabel.text = "Github since \( user.createdAt.convertToMonethYearFormat())"
         }
     }
     @objc func dismissVC() {
@@ -115,9 +115,7 @@ extension UserInfoVC: UserInfoVcDelegate{
             presentGFAlertOnMainThread(title: "No Followers", message: "User does not have any follower .. sad !!", buttonTitle: "Ok")
             return
         }
-        let followerListVC = FollowerListVC()
-        followerListVC.username = user.login
-        followerListVC.title = user.login
+        let followerListVC = FollowerListVC(userName: user.login)
         navigationController?.pushViewController(followerListVC, animated: true)
     }
 }

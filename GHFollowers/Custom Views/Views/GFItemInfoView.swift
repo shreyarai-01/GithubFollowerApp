@@ -56,23 +56,23 @@ class GFItemInfoView: UIView {
         
         switch iteminfo{
         case .repos :
-            symbolImage.image = UIImage(systemName: "folder")
-            titleLabel.text = "Public Repos"
+            symbolImage.image = Images.repos
+            titleLabel.text = Texts.repoText
             countLabel.text = String(count)
             
         case .gists :
-            symbolImage.image = UIImage(systemName: "text.alignleft")
-            titleLabel.text = "Public Gists"
+            symbolImage.image = Images.gists
+            titleLabel.text = Texts.gistText
             countLabel.text = String(count)
             
         case .folowers :
-            symbolImage.image = UIImage(systemName: "heart")
-            titleLabel.text = "Followers"
+            symbolImage.image = Images.follower
+            titleLabel.text = Texts.followerText
             countLabel.text = String(count)
             
         case .following :
-            symbolImage.image = UIImage(systemName: "person.2")
-            titleLabel.text = "Following"
+            symbolImage.image = Images.following
+            titleLabel.text = Texts.followingtext
             countLabel.text = String(count)
         }
     }

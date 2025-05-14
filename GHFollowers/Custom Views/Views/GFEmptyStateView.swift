@@ -30,17 +30,24 @@ class GFEmptyStateView: UIView {
         messageLabel.numberOfLines = 3
         messageLabel.textColor = .secondaryLabel
         
-        logoImage.image = UIImage(named: "empty-state-logo")
+        logoImage.image = Images.emptyState
         logoImage.translatesAutoresizingMaskIntoConstraints = false
         
+        let labelCenterYConstant: CGFloat = (DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed) ? -90 : -150
+        let messageLabelCenterY = messageLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: labelCenterYConstant)
+        messageLabelCenterY.isActive = true
+      
+        let logoBottomConstant: CGFloat = (DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed) ? 100 : 40
+        let logoImageViewBottom = logoImage.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: logoBottomConstant)
+        logoImageViewBottom.isActive = true
+        
+        
         NSLayoutConstraint.activate([
-            messageLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -150),
             messageLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40),
             messageLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40),
             messageLabel.heightAnchor.constraint(equalToConstant: 200),
             
-            logoImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 170),
-            logoImage.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 40)
+            logoImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 170)
         ])
     }
     
