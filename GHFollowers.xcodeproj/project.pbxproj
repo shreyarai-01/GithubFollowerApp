@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		300F811A2DD7B290004D7E4A /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300F81192DD7B290004D7E4A /* UIView+Ext.swift */; };
 		302AFBD12DC4CB1600EEC2DC /* UserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302AFBD02DC4CB1600EEC2DC /* UserInfoVC.swift */; };
 		302AFBD32DC4D7E400EEC2DC /* GFUserInfoHeaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302AFBD22DC4D7E400EEC2DC /* GFUserInfoHeaderVC.swift */; };
 		302AFBD52DC4D7FE00EEC2DC /* GFSecondaryTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302AFBD42DC4D7FE00EEC2DC /* GFSecondaryTitleLabel.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		300F81192DD7B290004D7E4A /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		302AFBD02DC4CB1600EEC2DC /* UserInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoVC.swift; sourceTree = "<group>"; };
 		302AFBD22DC4D7E400EEC2DC /* GFUserInfoHeaderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFUserInfoHeaderVC.swift; sourceTree = "<group>"; };
 		302AFBD42DC4D7FE00EEC2DC /* GFSecondaryTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFSecondaryTitleLabel.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 			children = (
 				ED29F78223BABEE300919052 /* UIViewController+Ext.swift */,
 				302AFBDF2DC5303300EEC2DC /* Date+Ext.swift */,
+				300F81192DD7B290004D7E4A /* UIView+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				300F811A2DD7B290004D7E4A /* UIView+Ext.swift in Sources */,
 				302AFBE02DC5303300EEC2DC /* Date+Ext.swift in Sources */,
 				3065732E2DAEA42C0049D4D8 /* User.swift in Sources */,
 				ED4DBB6923B7A5F90058ECD6 /* GFTextField.swift in Sources */,

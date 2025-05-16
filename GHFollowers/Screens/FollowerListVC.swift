@@ -1,9 +1,5 @@
 import UIKit
 
-protocol FollowerListVCDelegate : AnyObject {
-    
-    func didRequestFollower(for user: String)
-}
 class FollowerListVC: GFDataLoadingVC {
     
     
@@ -17,6 +13,7 @@ class FollowerListVC: GFDataLoadingVC {
     var page = 1
     var hasMoreFollowers = true
     var isSearching = false
+    var isLoadingMoreFollowers = false
     var filteredFollower :[Follower] = []
     
     init(userName: String){
@@ -35,7 +32,6 @@ class FollowerListVC: GFDataLoadingVC {
         navigationController?.navigationBar.prefersLargeTitles = true
         configureVC()
         configureCollectionView()
-      //  configureSearchController()
         getFollowers(username: username, page: page)
         configureDataSource()
         
@@ -95,6 +91,7 @@ class FollowerListVC: GFDataLoadingVC {
     
     func getFollowers(username : String, page: Int){
         showLoadingView()
+        isLoadingMoreFollowers = true
         NetworkManager.shared.getFollowers(for: username, page: page) {[weak self] result in
             guard let self = self else { return }
             self.dismissLoadingView()
@@ -124,6 +121,7 @@ class FollowerListVC: GFDataLoadingVC {
             case .failure(let error):
                 self.presentGFAlertOnMainThread(title: "Bad stuff", message: error.rawValue, buttonTitle: "OK")
             }
+            self.isLoadingMoreFollowers = false
         }
     }
     
@@ -155,7 +153,7 @@ extension FollowerListVC: UICollectionViewDelegate{
         let height = scrollView.frame.size.height
         
         if offsetY > contenHeight-height {
-            guard hasMoreFollowers else { return }
+            guard hasMoreFollowers, !isLoadingMoreFollowers else { return }
             page+=1
             getFollowers(username: username, page: page)
             
@@ -190,15 +188,15 @@ extension FollowerListVC: UISearchResultsUpdating, UISearchBarDelegate {
     }
 }
 
-extension FollowerListVC:FollowerListVCDelegate{
+extension FollowerListVC:UserInfoVCDelegate{
     func didRequestFollower(for username: String) {
-//        self.username = username
-//        title = username
-//        page = 1
-//        followers.removeAll()
-//        filteredFollower.removeAll()
-//        collectionView.setContentOffset(.zero, animated: true)
-//        getFollowers(username: username, page: page)
+        self.username = username
+        title = username
+        page = 1
+        followers.removeAll()
+        filteredFollower.removeAll()
+        collectionView.setContentOffset(.zero, animated: true)
+        getFollowers(username: username, page: page)
     }
     
     

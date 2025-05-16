@@ -1,9 +1,9 @@
 import UIKit
 import SafariServices
 
-protocol UserInfoVcDelegate : AnyObject{
-    func didTapGitProfile(for user: User)
-    func didTapGetFolowers(for user: User)
+protocol UserInfoVCDelegate : AnyObject {
+    
+    func didRequestFollower(for user: String)
 }
 
 class UserInfoVC: GFDataLoadingVC {
@@ -12,7 +12,7 @@ class UserInfoVC: GFDataLoadingVC {
     let headerView = UIView()
     let itemViewOne = UIView()
     let itemViewTwo = UIView()
-    weak var delegate : FollowerListVCDelegate!
+    weak var delegate : UserInfoVCDelegate!
     let dateLabel = GFBodyLabel(textAlignment: .center)
     
     
@@ -23,6 +23,12 @@ class UserInfoVC: GFDataLoadingVC {
         layoutUI()
         getUserInfo()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.largeTitleDisplayMode = .never
+    }
+
     
     func layoutUI() {
         let padding :CGFloat = 20
@@ -41,7 +47,7 @@ class UserInfoVC: GFDataLoadingVC {
         
         NSLayoutConstraint.activate([
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 180),
+            headerView.heightAnchor.constraint(equalToConstant: 200),
             
             itemViewOne.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: padding),
             itemViewOne.heightAnchor.constraint(equalToConstant: itemHEIGHT),
@@ -49,8 +55,8 @@ class UserInfoVC: GFDataLoadingVC {
             itemViewTwo.topAnchor.constraint(equalTo: itemViewOne.bottomAnchor, constant: padding),
             itemViewTwo.heightAnchor.constraint(equalToConstant: itemHEIGHT),
             
-            dateLabel.topAnchor.constraint(equalTo: itemViewTwo.bottomAnchor, constant: padding),
-            dateLabel.heightAnchor.constraint(equalToConstant: 18)
+            dateLabel.topAnchor.constraint(equalTo: itemViewTwo.bottomAnchor, constant: 15),
+            dateLabel.heightAnchor.constraint(equalToConstant: 50)
             
         ])
     }
@@ -101,7 +107,7 @@ class UserInfoVC: GFDataLoadingVC {
     
 }
 
-extension UserInfoVC: UserInfoVcDelegate{
+extension UserInfoVC: ItemInfoVcDelegate{
     func didTapGitProfile(for user: User) {
         guard let url = URL(string: user.htmlUrl) else{
             presentGFAlertOnMainThread(title: "Invalid User", message: "The url attached to this user is invalid !!! do something", buttonTitle: "ok")

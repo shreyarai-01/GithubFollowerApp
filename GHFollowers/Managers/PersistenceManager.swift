@@ -19,21 +19,20 @@ enum PersistenceManager {
         
         retriveFavourites { result in
             switch result {
-            case .success(let favo):
-                var retrievedFavs = favo
+            case .success(var favo):
                 switch actionType {
                     
                 case .add :
-                    guard !retrievedFavs.contains(favorite) else{
+                    guard !favo.contains(favorite) else{
                         completed(.alreadyINFavs)
                         return
                     }
-                    retrievedFavs.append(favorite)
+                    favo.append(favorite)
                     
                 case .remove:
-                    retrievedFavs.removeAll{ $0.login == favorite.login }
+                    favo.removeAll{ $0.login == favorite.login }
                 }
-                completed(save(favouries: retrievedFavs))
+                completed(save(favouries: favo))
             case .failure(let error):
                 completed(error)
             }

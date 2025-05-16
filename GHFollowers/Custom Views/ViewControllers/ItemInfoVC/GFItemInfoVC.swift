@@ -5,9 +5,14 @@
 
 import UIKit
 
+protocol ItemInfoVcDelegate : AnyObject{
+    func didTapGitProfile(for user: User)
+    func didTapGetFolowers(for user: User)
+}
+
 class GFItemInfoVC: UIViewController {
 
-    weak var delegate:UserInfoVcDelegate!
+    weak var delegate:ItemInfoVcDelegate!
     var userr : User!
     let stackView = UIStackView()
     let itemInfoViewOne = GFItemInfoView()
@@ -36,11 +41,7 @@ class GFItemInfoVC: UIViewController {
         view.backgroundColor = .secondarySystemBackground
     }
     func layoutUI(){
-        view.addSubview(stackView)
-        view.addSubview(actionBtn)
-        view.addSubview(itemInfoViewOne)
-        view.addSubview(itemInfoViewTwo)
-        
+        view.addSubviews(stackView,actionBtn)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         let padding:CGFloat = 20
         
