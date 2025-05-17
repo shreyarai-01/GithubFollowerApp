@@ -15,7 +15,6 @@ class UserInfoVC: GFDataLoadingVC {
     weak var delegate : UserInfoVCDelegate!
     let dateLabel = GFBodyLabel(textAlignment: .center)
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,7 +27,6 @@ class UserInfoVC: GFDataLoadingVC {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.largeTitleDisplayMode = .never
     }
-
     
     func layoutUI() {
         let padding :CGFloat = 20
@@ -43,7 +41,6 @@ class UserInfoVC: GFDataLoadingVC {
                 item.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding)
             ])
         }
-        
         
         NSLayoutConstraint.activate([
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -60,6 +57,7 @@ class UserInfoVC: GFDataLoadingVC {
             
         ])
     }
+    
     func configureVC() {
         view.backgroundColor = .systemBackground
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
@@ -81,6 +79,7 @@ class UserInfoVC: GFDataLoadingVC {
             }
         }
     }
+    
     func configureUIElement(with user: User) {
         DispatchQueue.main.async {
             let repoItemVC = GFRepoItemVC(user: user)
@@ -94,6 +93,7 @@ class UserInfoVC: GFDataLoadingVC {
             self.dateLabel.text = "Github since \( user.createdAt.convertToMonethYearFormat())"
         }
     }
+    
     @objc func dismissVC() {
         navigationController?.popViewController(animated: true)
     }
@@ -104,7 +104,6 @@ class UserInfoVC: GFDataLoadingVC {
         childVC.view.frame = containerView.bounds
         childVC.didMove(toParent: self)
     }
-    
 }
 
 extension UserInfoVC: ItemInfoVcDelegate{

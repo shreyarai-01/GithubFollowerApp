@@ -11,7 +11,7 @@ protocol ItemInfoVcDelegate : AnyObject{
 }
 
 class GFItemInfoVC: UIViewController {
-
+    
     weak var delegate:ItemInfoVcDelegate!
     var userr : User!
     let stackView = UIStackView()
@@ -29,17 +29,17 @@ class GFItemInfoVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       configureBG()
+        configureBG()
         configureActionButton()
         layoutUI()
         configureStackView()
-        
     }
     
     func configureBG(){
         view.layer.cornerRadius = 18
         view.backgroundColor = .secondarySystemBackground
     }
+    
     func layoutUI(){
         view.addSubviews(stackView,actionBtn)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -66,13 +66,10 @@ class GFItemInfoVC: UIViewController {
         stackView.addArrangedSubview(itemInfoViewOne)
         stackView.addArrangedSubview(itemInfoViewTwo)
     }
+    
     private func configureActionButton(){
-        
         actionBtn.addTarget(self, action: #selector(actionBtnTyped), for: .touchUpInside)
     }
     
-    @objc func actionBtnTyped(){
-        
-    }
-
+    @objc func actionBtnTyped(){}
 }

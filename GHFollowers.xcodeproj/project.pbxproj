@@ -107,13 +107,13 @@
 			path = ItemInfoVC;
 			sourceTree = "<group>";
 		};
-		3045C7202DCA7367008C5EFD /* Structures */ = {
+		3045C7202DCA7367008C5EFD /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				3065732D2DAEA42C0049D4D8 /* User.swift */,
 				3065732B2DAEA3F00049D4D8 /* Follower.swift */,
 			);
-			path = Structures;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		3045C7212DCBBD3A008C5EFD /* TabBarControllers */ = {
@@ -278,7 +278,7 @@
 				ED29F78623BBB22A00919052 /* Extensions */,
 				ED29F78523BBB1E100919052 /* Custom Views */,
 				ED29F78423BBB19500919052 /* Screens */,
-				3045C7202DCA7367008C5EFD /* Structures */,
+				3045C7202DCA7367008C5EFD /* Models */,
 				ED29F78723BBB28E00919052 /* Support */,
 				EDDFE24F23B6C71E00C026C3 /* Info.plist */,
 			);

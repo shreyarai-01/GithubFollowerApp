@@ -4,15 +4,18 @@ class FavoritesListVC: GFDataLoadingVC{
     
     let tableView = UITableView()
     var favorites:[Follower] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureVC()
         configureTableView()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getFavorite()
     }
+    
     func getFavorite() {
         PersistenceManager.retriveFavourites { [weak self] result  in
             guard let self = self else { return }
@@ -32,12 +35,14 @@ class FavoritesListVC: GFDataLoadingVC{
             }
         }
     }
+    
     private func configureVC(){
         view.backgroundColor = .systemBackground
         title = "Favorites"
         navigationController?.navigationBar.prefersLargeTitles = true
         
     }
+    
     func configureTableView(){
         view.addSubview(tableView)
         tableView.frame = view.bounds
@@ -52,12 +57,14 @@ extension FavoritesListVC : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return favorites.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteCell.reuseID) as! FavoriteCell
         let favorite = favorites[indexPath.row]
         cell.set(favorite: favorite)
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let favorite = favorites[indexPath.row]
         let destVC = FollowerListVC(userName: favorite.login)
@@ -65,6 +72,7 @@ extension FavoritesListVC : UITableViewDelegate, UITableViewDataSource {
         navigationController?.pushViewController(destVC, animated: true)
         
     }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else{ return }
         

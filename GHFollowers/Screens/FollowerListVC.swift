@@ -2,7 +2,6 @@ import UIKit
 
 class FollowerListVC: GFDataLoadingVC {
     
-    
     enum Section {
         case main
     }
@@ -36,15 +35,18 @@ class FollowerListVC: GFDataLoadingVC {
         configureDataSource()
         
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
+    
     func configureVC() {
         view.backgroundColor = .systemBackground
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         navigationItem.rightBarButtonItem = addButton
     }
+    
     @objc func addButtonTapped(){
         showLoadingView()
         NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
@@ -156,10 +158,9 @@ extension FollowerListVC: UICollectionViewDelegate{
             guard hasMoreFollowers, !isLoadingMoreFollowers else { return }
             page+=1
             getFollowers(username: username, page: page)
-            
         }
-        
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let activeArray = isSearching ? filteredFollower:followers
         let followerr = activeArray[indexPath.item]
@@ -169,10 +170,11 @@ extension FollowerListVC: UICollectionViewDelegate{
             destVC.delegate = self
             self.navigationController?.pushViewController(destVC, animated: true)
         }
-
+        
     }
 }
 extension FollowerListVC: UISearchResultsUpdating, UISearchBarDelegate {
+    
     func updateSearchResults(for searchController: UISearchController) {
         guard let filter = searchController.searchBar.text, !filter.isEmpty else {
             updateData(on: followers)
@@ -182,6 +184,7 @@ extension FollowerListVC: UISearchResultsUpdating, UISearchBarDelegate {
         filteredFollower = followers.filter { $0.login.lowercased().contains(filter.lowercased()) }
         updateData(on: filteredFollower)
     }
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         isSearching = false
         updateData(on: followers)
@@ -198,6 +201,4 @@ extension FollowerListVC:UserInfoVCDelegate{
         collectionView.setContentOffset(.zero, animated: true)
         getFollowers(username: username, page: page)
     }
-    
-    
 }

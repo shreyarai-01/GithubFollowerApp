@@ -4,28 +4,29 @@
 //
 
 import UIKit
+
 enum Images {
-    static let ghLogo = UIImage(named: "gh-logo")
-    static let placeHolder = UIImage(named: "avatar-placeholder")
-    static let emptyState = UIImage(named: "empty-state-logo")
-    static let repos = UIImage(systemName: "folder")
-    static let gists = UIImage(systemName: "text.alignleft")
-    static let follower = UIImage(systemName: "heart")
-    static let following = UIImage(systemName: "person.2")
+    static let ghLogo                   = UIImage(named: "gh-logo")
+    static let placeHolder              = UIImage(named: "avatar-placeholder")
+    static let emptyState               = UIImage(named: "empty-state-logo")
+    static let repos                    = UIImage(systemName: "folder")
+    static let gists                    = UIImage(systemName: "text.alignleft")
+    static let follower                 = UIImage(systemName: "heart")
+    static let following                = UIImage(systemName: "person.2")
 }
 
 enum Texts {
-    static let repoText = "Public Repos"
-    static let gistText = "Public Gists"
-    static let followerText = "Followers"
-    static let followingtext = "Following"
+    static let repoText                 = "Public Repos"
+    static let gistText                 = "Public Gists"
+    static let followerText             = "Followers"
+    static let followingtext            = "Following"
 }
 
 enum ScreenSize {
-    static let width        = UIScreen.main.bounds.size.width
-    static let height       = UIScreen.main.bounds.size.height
-    static let maxLength    = max(ScreenSize.width, ScreenSize.height)
-    static let minLength    = min(ScreenSize.width, ScreenSize.height)
+    static let width                    = UIScreen.main.bounds.size.width
+    static let height                   = UIScreen.main.bounds.size.height
+    static let maxLength                = max(ScreenSize.width, ScreenSize.height)
+    static let minLength                = min(ScreenSize.width, ScreenSize.height)
 }
 
 enum DeviceTypes {

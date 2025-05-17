@@ -7,12 +7,12 @@ import UIKit
 
 class GFUserInfoHeaderVC: UIViewController {
     
-    let avatarImageView = GFImageAvatarView(frame: .zero)
-    let usernameLabel = GFTitleLabel(textAlignment: .left, fontSize: 34)
-    let nameLabel = GFSecondaryTitleLabel(fontSize: 18)
-    let locationImageView = UIImageView()
-    let locationLabel = GFSecondaryTitleLabel(fontSize: 10)
-    let bioLabel = GFBodyLabel(textAlignment: .left)
+    let avatarImageView     = GFImageAvatarView(frame: .zero)
+    let usernameLabel       = GFTitleLabel(textAlignment: .left, fontSize: 34)
+    let nameLabel           = GFSecondaryTitleLabel(fontSize: 18)
+    let locationImageView   = UIImageView()
+    let locationLabel       = GFSecondaryTitleLabel(fontSize: 10)
+    let bioLabel            = GFBodyLabel(textAlignment: .left)
     var user:User!
     
     override func viewDidLoad() {
@@ -20,21 +20,16 @@ class GFUserInfoHeaderVC: UIViewController {
         addsubView()
         layoutUI()
         configureUI()
-        
     }
+    
     func configureUI() {
-        NetworkManager.shared.downloadImage(from: user.avatarUrl) { [weak self] image in
-            guard let self = self else { return }
-            DispatchQueue.main.async{
-                self.avatarImageView.image = image
-            }
-        }
-        usernameLabel.text = user.login
-        nameLabel.text = user.name ?? "No name"
-        locationLabel.text = user.location ?? "No location"
-        bioLabel.text = user.bio ?? "No bio"
-        bioLabel.numberOfLines = 3
-        locationImageView.image  = UIImage(systemName: "mappin.and.ellipse")
+        avatarImageView.downloadImage(fromURL: user.avatarUrl)
+        usernameLabel.text      = user.login
+        nameLabel.text          = user.name ?? "No name"
+        locationLabel.text      = user.location ?? "No location"
+        bioLabel.text           = user.bio ?? "No bio"
+        bioLabel.numberOfLines  = 3
+        locationImageView.image = UIImage(systemName: "mappin.and.ellipse")
         locationImageView.tintColor = .secondaryLabel
     }
     
@@ -52,6 +47,7 @@ class GFUserInfoHeaderVC: UIViewController {
     }
     
     func layoutUI(){
+        
         let padding:CGFloat = 20
         let textImagePadding:CGFloat = 12
         locationImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -89,5 +85,4 @@ class GFUserInfoHeaderVC: UIViewController {
             
         ])
     }
-    
 }

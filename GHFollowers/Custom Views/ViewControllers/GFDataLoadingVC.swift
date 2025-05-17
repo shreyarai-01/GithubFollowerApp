@@ -9,8 +9,9 @@
 import UIKit
 
 class GFDataLoadingVC: UIViewController {
-
-     var containerView : UIView!
+    
+    var containerView : UIView!
+    
     func showLoadingView(){
         containerView = UIView(frame: view.bounds)
         view.addSubview(containerView)
@@ -19,6 +20,7 @@ class GFDataLoadingVC: UIViewController {
         UIView.animate(withDuration: 0.25) {
             self.containerView.alpha = 0.8
         }
+        
         let activityIndicator = UIActivityIndicatorView(style: .large)
         containerView.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -33,7 +35,6 @@ class GFDataLoadingVC: UIViewController {
         DispatchQueue.main.async{
             self.containerView.removeFromSuperview()
             self.containerView = nil
-            
         }
     }
     
@@ -42,5 +43,4 @@ class GFDataLoadingVC: UIViewController {
         emptyStateView.frame = view.bounds
         view.addSubview(emptyStateView)
     }
-
 }

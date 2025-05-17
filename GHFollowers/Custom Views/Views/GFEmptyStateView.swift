@@ -17,6 +17,7 @@ class GFEmptyStateView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     init(message: String){
         super.init(frame: .zero)
         messageLabel.text = message
@@ -34,10 +35,9 @@ class GFEmptyStateView: UIView {
         messageLabel.numberOfLines = 3
         messageLabel.textColor = .secondaryLabel
         let labelCenterYConstant: CGFloat = (DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed) ? -90 : -150
-        let messageLabelCenterY = messageLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: labelCenterYConstant)
-        messageLabelCenterY.isActive = true
         
         NSLayoutConstraint.activate([
+            messageLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: labelCenterYConstant),
             messageLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40),
             messageLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40),
             messageLabel.heightAnchor.constraint(equalToConstant: 200),
@@ -51,12 +51,10 @@ class GFEmptyStateView: UIView {
         logoImage.translatesAutoresizingMaskIntoConstraints = false
         
         let logoBottomConstant: CGFloat = (DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed) ? 100 : 40
-        let logoImageViewBottom = logoImage.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: logoBottomConstant)
-        logoImageViewBottom.isActive = true
         
         NSLayoutConstraint.activate([
-            logoImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 170)
+            logoImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 170),
+            logoImage.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: logoBottomConstant)
         ])
     }
-    
 }
