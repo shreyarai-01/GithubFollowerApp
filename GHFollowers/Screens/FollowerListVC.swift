@@ -50,19 +50,19 @@ class FollowerListVC: GFDataLoadingVC {
     @objc func addButtonTapped(){
         showLoadingView()
         NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
             self.dismissLoadingView()
             switch result {
             case .success(let user):
                 let favor = Follower(login: user.login, avatarUrl: user.avatarUrl)
                 PersistenceManager.updateWith(favorite: favor, actionType: .add) { [weak self] error in
-                    guard let self = self else { return }
-                    guard let err = error else {
+                    guard let self else { return }
+                    guard let error  else {
                         self.presentGFAlertOnMainThread(title: "Sucesss", message: "You have favourited ", buttonTitle: "Hooray")
                         return
                         
                     }
-                    self.presentGFAlertOnMainThread(title: "Something went wrong", message: err.rawValue, buttonTitle: "Okk")
+                    self.presentGFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "Okk")
                     
                 }
                 
@@ -95,7 +95,7 @@ class FollowerListVC: GFDataLoadingVC {
         showLoadingView()
         isLoadingMoreFollowers = true
         NetworkManager.shared.getFollowers(for: username, page: page) {[weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
             self.dismissLoadingView()
             switch result
             {

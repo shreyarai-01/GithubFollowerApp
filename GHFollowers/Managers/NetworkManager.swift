@@ -30,7 +30,7 @@ class NetworkManager {
                 completed(.failure(.invalidResponse))
                 return
             }
-            guard let data = data else{
+            guard let data else{
                 completed(.failure(.invalidData))
                 return
             }
@@ -64,7 +64,7 @@ class NetworkManager {
                 completed(.failure(.invalidResponse))
                 return
             }
-            guard let data = data else{
+            guard let data else{
                 completed(.failure(.invalidData))
                 return
             }
@@ -93,13 +93,13 @@ class NetworkManager {
         }
         
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            guard let self = self else {
+            guard let self else {
                 completed(nil)
                 return
             }
             if error != nil { return }
             guard let response = response as? HTTPURLResponse, response.statusCode == 200  else { return }
-            guard let data = data else { return }
+            guard let data else { return }
             
             guard let image = UIImage(data: data) else { return }
             self.cache.setObject(image, forKey: cacheKey)
